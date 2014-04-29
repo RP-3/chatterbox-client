@@ -17,103 +17,10 @@
   <body>
     <div id="main">
       <h1>chatterbox</h1>
-      <input id="messageInput">Message here:</input>
-      <div id="chats"> </div>
-      <h1>Rooms</h1>
-      <ul id="roomSelect"></ul>
     </div>
     <script>
 
-      $('#chats').on('click', '.username', function(event){
-        console.log('clicked username');
-        console.log(this);
-        console.log($(this));
-        app.addFriend();
-        event.preventDefault();
-      });
-
-      $('#roomSelect').on('click', 'button', function(e) {
-        console.log($(this).text());
-      });
-
-      $("#messageInput").on('keyup', function(e){
-        if(e.keyCode === 13){
-          var windowData = window.location.search;
-
-          var userName = windowData.slice(windowData.indexOf("=")+1);
-          var messageText = $("#messageInput").val();
-          $("#messageInput").val("");
-
-          var message = {
-            'username': userName,
-            'text': messageText,
-            'roomname': 'lobby'
-          };
-
-          app.send(message);
-        }
-
-      });
-    </script>
-    <script>
-      var appbb = {};
-      appbb.fetchNow = function(){
-        $.ajax({
-          // always use this url
-          url: 'https://api.parse.com/1/classes/chatterbox',
-          type: 'GET',
-          data: {order: '-createdAt', limit: 100},
-          success: function (data) {
-            console.log('chatterbox: Message fetched');
-            console.log(data);
-            appbb.handleFetch(data);
-          },
-          error: function (data) {
-            console.error('chatterbox: Failed to receive message');
-          }
-        });
-      };
-
-      appbb.handleFetch = function(data){
-        appbb.messages = data.results;
-        appbb.appConvertedModels = [];
-        _.each(appbb.messages, function(value){
-          //appbb.addMessage(value);
-          var message = new Message(value);
-          appbb.appConvertedModels.push(message);
-          console.log(message);
-        });
-
-        // app.roomnames = _.unique(_.pluck(app.messages, 'roomname'));
-        // for (var i = 0; i < app.roomnames.length; i++) {
-        //   app.addRoom(app.roomnames[i]);
-        // }
-      };
     </script>
 
-    <script>
-      var Messages = Backbone.Collection.extend({
-        model: Message
-      });
-      var Message = Backbone.Model.extend({
-        default: {
-          room: 'lobby',
-          user: 'no name',
-          message: 'na'
-        }
-      });
-
-      var Router = Backbone.Router.extend({
-        routes: {
-          "": "home"
-        }
-      });
-
-      var router = new Router;
-      router.on('route:home', function(){
-        messageListView.render();
-      })
-
-    </script>
   </body>
 </html>
