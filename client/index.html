@@ -15,6 +15,7 @@
   <body>
     <div id="main">
       <h1>chatterbox</h1>
+      <input id="messageInput">Message here:</input>
       <div id="chats"> </div>
       <h1>Rooms</h1>
       <ul id="roomSelect"></ul>
@@ -30,8 +31,28 @@
       });
 
       $('#roomSelect').on('click', 'button', function(e) {
-        console.log($(this).text())
-      })
+        console.log($(this).text());
+      });
+
+      $("#messageInput").on('keyup', function(e){
+        if(e.keyCode === 13){
+          var windowData = window.location.search;
+
+          var userName = windowData.slice(windowData.indexOf("=")+1);
+          var messageText = $("#messageInput").val();
+          $("#messageInput").val("");
+
+          var message = {
+            'username': userName,
+            'text': messageText,
+            'roomname': 'lobby'
+          };
+
+          app.send(message);
+        }
+
+      });
+
 
     </script>
   </body>

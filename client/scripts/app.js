@@ -7,6 +7,7 @@ var app = {};
 
 app.init = function(){
   app.fetch();
+  app.friendList = {};
 };
 
 app.send = function(message){
@@ -49,15 +50,13 @@ app.clearMessages = function(){
 };
 
 app.addMessage = function(message){
-  //console.log(message);
+
   var appendix = $('<div/>')
     .append($('<a class="username" href="#" />')
       .append($('<span/>').text(message.username))
     )
     .append($('<span/>').text(" : " + message.text))
     .append($('<span/>').text(" @ " + message.roomname))
-  // var appendix = $('<div>').html(
-  //   '<a class="username" href="#">'+ cleanedUsername +'</a>: ' + cleanedText + '@ ' + cleanedRoomname
 
   $('#chats').append(appendix);
 };
@@ -69,7 +68,7 @@ app.addRoom = function(roomName){
 };
 
 app.addFriend = function(friend){
-
+  app.friendList[friend] = true;
 };
 
 app.handleFetch = function(data){
