@@ -16,6 +16,23 @@
     <div id="main">
       <h1>chatterbox</h1>
       <div id="chats"> </div>
+      <h1>Rooms</h1>
+      <ul id="roomSelect"></ul>
     </div>
+    <script>
+
+      $('#chats').on('click', '.username', function(event){
+        console.log('clicked username');
+        console.log(this);
+        console.log($(this));
+        app.addFriend();
+        event.preventDefault();
+      });
+
+      $('#roomSelect').on('click', 'button', function(e) {
+        console.log($(this).text())
+      })
+
+    </script>
   </body>
 </html>
